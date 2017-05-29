@@ -585,7 +585,13 @@ def perform(
 
                 tmp = node.outputs[idx].type.value_zeros(shape)
                 tmp[:] = outs[idx][0][:pdx]
-                outs[idx][0][:store_steps[idx]-pdx] = outs[idx][0][pdx:]
+                
+                #outs[idx][0][:store_steps[idx]-pdx] = outs[idx][0][pdx:]
+                
+                tmp2 = numpy.copy(outs[idx][0][pdx:])
+                #outs[idx][0][:store_steps[idx]-pdx] = outs[idx][0][pdx:]
+                outs[idx][0][:store_steps[idx]-pdx] = tmp2
+                
                 outs[idx][0][store_steps[idx]-pdx:] = tmp
             else:
                 shape = (store_steps[idx]-pdx,) + outs[idx][0].shape[1:]
