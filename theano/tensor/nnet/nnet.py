@@ -914,7 +914,8 @@ def softmax_simplifier(numerators, denominators):
             numerators.append(softmax)
 
     return numerators, denominators
-opt.local_mul_canonizer.add_simplifier(softmax_simplifier, 'softmax_simplifier')
+if not theano.config.device.startswith('opencl'):
+    opt.local_mul_canonizer.add_simplifier(softmax_simplifier, 'softmax_simplifier')
 
 
 class CrossentropySoftmaxArgmax1HotWithBias(gof.Op):
